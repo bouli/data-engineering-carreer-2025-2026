@@ -1,11 +1,14 @@
-Studies Plan
+# Studies Plan w/ Mentor 2025/2026
+
+
 --
+```
 BEGINNER (0 a 1 OU 2 anos):
 - SQL -> confident
 - Python -> confident
 - Modelagem de Bancos de Dados e DW -> confident
-- Cloud (conceitos) -> AWS
-- Git -> OK
+- Cloud (conceitos) -> AWS -> no
+- Git -> confident
 - Focus on projects: send example git projects, resume
 
 MID ( 2 a 4 anos):
@@ -15,22 +18,19 @@ MID ( 2 a 4 anos):
 - Git + GitHub ou GitLab
 
 ADVANCED (>4 anos):
-- IaC -> nao
+- IaC -> no
 - CI CD -> ok
-- Containers (Doker) -> nao
-- Orquestracao de Containers (k8s) -> nao
-
+- Containers (Doker) -> ok
+- Orquestracao de Containers (k8s) -> no
+```
 
 Free Project-based Courses Options
 --
-https://github.com/DataTalksClub/data-engineering-zoomcamp
-Esse curso aqui parece bem o que eu precisaria. Aparentemente é um bootcamp que começa em 2026, mas se eu fizer self-paced eu posso fazer sozinho. Uma parte que eu gostei é que aparentemente é bem atual.
+https://github.com/DataTalksClub/data-engineering-zoomcamp (chosen one)
+This course here looks like exactly what I need. Apparently, it's a bootcamp that starts in 2026, but if I do it self-paced, I can do it alone. One part I liked is that it seems very current.
 
 https://dezoomcamp.streamlit.app/Course%20Overview
-Eu havia encontrado esse link aqui antes, mas aparentemente o link acima é esse mesmo curso, só que atualizado e direto no github
+I had found this link here before, but apparently the link above is this same course, only updated and directly on github.
 
 https://dataengineeracademy.com/courses/de-end-to-end-projects-free/
-Encontrei esse cara aqui também. Esse é o link público, mas dentro da plataforma, tem cursos mais específicos baseados em projetos.
-
-https://learn.dataexpert.io/program/free-community-boot-camp/details
-Aquele cara que vc me passou o nome anunciou esse bootcamp program que me pareceu bastante interessante também.
+I found this guy here too. This is the public link, but within the platform, there are more specific project-based courses.

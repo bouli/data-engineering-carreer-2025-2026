@@ -1,0 +1,7 @@
+sandbox
+raw_data
+ny_taxi_postgres_data
+.ipynb_*
+venv
+__pycache__
+*.ipynb
