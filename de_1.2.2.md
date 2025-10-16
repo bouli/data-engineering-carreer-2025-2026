@@ -16,6 +16,7 @@ docker run -it \
     -v $(pwd)/ny_taxi_data_postgres_data:/var/lib/postgresql/data \
     postgres:13
 ```
+> [snippets/docker-postgres.md](snippets/docker-postgres.md)
 
 ### Testing Postgress connection
 
@@ -87,3 +88,22 @@ for i in range(math.ceil(n_lines / chunksize)):
 print('insertion finished')
 
 ```
+
+The lesson 1.2.3 is:
+- Creating a docker network;
+```shel
+docker network create pg-network
+```
+> [snippets/docker-network.md](snippets/docker-network.md)
+
+- Installing, configuring and using of pg-admin;
+```shell
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL=admin@admin.com \
+    -e PGADMIN_DEFAULT_PASSWORD=root \
+    -p 8080:80 \
+    --name pg-admin \
+    --network=pg-network \
+    dpage/pgadmin4
+```
+> [snippets/docker-pgadmin.md](snippets/docker-pgadmin.md)
