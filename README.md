@@ -12,7 +12,7 @@ Course: https://github.com/DataTalksClub/data-engineering-zoomcamp
 Video: [DE Zoomcamp 1.2.1 - Introduction to Docker](https://www.youtube.com/watch?v=EYNwNlOrpr0)
 
 First, let's have a quick check in a Dockerfile and a simple usage.
-> [de_1.2.1/Dockerfile](de_1.2.1/Dockerfile)
+> [Dockerfile](Dockerfile)
 ```Dockerfile
 FROM python:3.9
 
@@ -57,7 +57,7 @@ pgcli -u root -h localhost -p 5432 -d ny_taxi
 
 Let's create the table based on the CSV we have download from NYC TLC https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page . Nowadays, they are using _paquet_. I know we can use paquet directely, but for "academic purposes", I'm converting to CSV:
 
-> [de_1.2.2.z-parquet_to_csv.py](de_1.2.2.z-parquet_to_csv.py)
+> [convertion-parquet_to_csv.py](convertion-parquet_to_csv.py)
 ```python
 import pandas as pd
 import sys
@@ -71,13 +71,13 @@ else:
 
 On _terminal_:
 ```shell
-python parquet_to_csv.py raw_data/yellow_tripdata_2021-01.parquet raw_data/yellow_tripdata_2021-01.csv
+python convertion-parquet_to_csv.py raw_data/yellow_tripdata_2021-01.parquet raw_data/yellow_tripdata_2021-01.csv
 ```
 
 Than, we read the CSV, in this case, just 100 lines, to define our _schema_. We convert the fields we need to datetime (this ones are read as text from pandas for _CSV_. In _parquet_ it wouldn't be necessary.), and create the table at the database. (SQLAlchemy is a helper to check what's happening)
 
 
-> [de_1.2.2.py](de_1.2.2.py)
+> [ingestion-data.py](ingestion-data.py)
 ```python
 import pandas as pd
 from sqlalchemy import create_engine
@@ -99,7 +99,7 @@ df.head(n=0).to_sql(name='yellow_taxi_data', con=engine, if_exists='replace')
 And finally we insert data. using interator. The video uses an exception to stop the data insertion loop, but I decided to make it a little bit more elegant.
 
 
-> [de_1.2.2.py](de_1.2.2.py)
+> [ingestion-data.py](ingestion-data.py)
 ```python
 print('inserting data')
 n_lines = len(pd.read_csv('raw_data/yellow_tripdata_2021-01.csv'))
