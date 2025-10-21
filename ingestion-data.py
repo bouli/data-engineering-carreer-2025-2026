@@ -24,7 +24,7 @@ def main(params):
     logger.info(f"Downloading data from {url_file}")
     if url_file.endswith('.csv'):
         os.system(f"wget {url_file} -O {csv_temp_file}")
-        df = pd.read_csv(csv_temp_file)
+        df = pd.read_csv(csv_temp_file, nrows=100)
     elif url_file.endswith('.parquet'):
 
         logger.info("Converting Parquet file to CSV")
@@ -34,7 +34,8 @@ def main(params):
         os.remove(csv_temp_file + ".parquet")
         #TODO: Decide if we maintain the "parquet to CSV" convertion.
         # Parquet is way better to create table schemas directly from it.
-        df.to_csv(csv_temp_file)
+        df.to_csv(csv_temp_file, index=False)
+        df = df.head(n=100)
 
     else:
         raise Exception(f"Sorry, but the url_file you are using ({url_file}) needs to be a CSV or a Parquet file.")
@@ -43,10 +44,11 @@ def main(params):
     engine = create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db}")
 
     logger.info("Creating table in the database if it does not exist")
-    df = pd.read_csv(csv_temp_file, nrows=100)
-
-    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
-    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+    #df = pd.read_csv(csv_temp_file, nrows=100)
+    #if 'tpep_pickup_datetime' in df.columns:
+    #    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
+    #if 'tpep_dropoff_datetime' in df.columns:
+    #    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
 
     df.head(n=0).to_sql(name=table_name, con=engine, if_exists='replace')
 
