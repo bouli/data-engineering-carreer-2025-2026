@@ -282,3 +282,15 @@ again. We will have an error. For these, we need to force the recreation:
 ```shell
 docker compose up --force-recreate
 ```
+
+----
+## Extra
+
+I decided to add this docker image in my docker hub profile.
+So, I created the repository at hub, and pushed my image:
+> [snippets/docker-push.md](snippets/docker-push.md)
+```shell
+docker push cesarbouli/url2pg:v0.0.2
+```
+
+Docker Hub Repository: [https://hub.docker.com/r/cesarbouli/url2pg](https://hub.docker.com/r/cesarbouli/url2pg)
