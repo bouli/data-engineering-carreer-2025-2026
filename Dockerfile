@@ -2,8 +2,10 @@ FROM python:3.9
 
 WORKDIR /app
 
-COPY pipeline.py pipeline.py
+COPY ingestion-data.py ingestion-data.py
+COPY requirements.txt requirements.txt
 
-RUN pip install pandas
+RUN apt-get update && apt-get install -y wget
+RUN pip install -r requirements.txt
 
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "python", "ingestion-data.py" ]
