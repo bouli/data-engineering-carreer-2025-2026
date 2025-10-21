@@ -198,6 +198,24 @@ logging.basicConfig(level=logging.INFO)
     # (...)
 ```
 
+Let's update our [Dockerfile](Dockerfile) to install the our script dependencies:
+
+> [Dockerfile](Dockerfile)
+```Dockerfile
+FROM python:3.9
+
+WORKDIR /app
+
+COPY ingestion-data.py ingestion-data.py
+COPY requirements.txt requirements.txt
+
+RUN apt-get update && apt-get install -y wget
+RUN pip install -r requirements.txt
+
+ENTRYPOINT [ "python", "ingestion-data.py" ]
+
+```
+
 Now, let's build our Docker image:
 > [snippets/docker-build.md](snippets/docker-build.md)
 ```shell
