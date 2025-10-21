@@ -1,5 +1,3 @@
-pgcli
-jupyter
 pandas
 sqlalchemy
 psycopg2
