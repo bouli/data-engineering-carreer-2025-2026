@@ -220,3 +220,47 @@ docker run -it \
     --table_name=yellow_taxi_data \
     --url_file=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet
 ```
+
+----
+## Class DE 1.2.5
+
+Let's make our first `docker-compose` file to start our database and pg-admin:
+
+> [docker-compose.yaml](docker-compose.yaml)
+```yaml
+services:
+  pg-database:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ny_taxi
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+  pg-admin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "8080:80"
+
+```
+And than we just execute docker compose:
+
+> [docker-compose-up.md](docker-compose-up.md)
+```shell
+docker compose up
+```
+
+In this case, we don't need to specify the network, docker compose creates it's
+own network. \
+To understand better, I deleted the default network and tried to start compose
+again. We will have an error. For these, we need to force the recreation:
+
+> [docker-compose-up.md](docker-compose-up.md)
+```shell
+docker compose up --force-recreate
+```
