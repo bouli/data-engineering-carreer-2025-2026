@@ -17,7 +17,6 @@ def main(params):
     url_file=params.url_file
 
     csv_temp_file = 'temp.csv'
-    # https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet
 
     logger = logging.getLogger()
     logger.info("Ingestion-Data script started")

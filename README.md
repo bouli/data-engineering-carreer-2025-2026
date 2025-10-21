@@ -116,7 +116,7 @@ print('insertion finished')
 ```
 ## Class DE 1.2.3
 
-Now it's time to add a pg-admin, a web-based tool to manage postgres databases.
+Now it's time to add a pg-admin, a web-based tool to manage postgres databases. \
 Since we are using Docker and pg-admin it's a different container, we need to
 connect them using a Docker Network.
 
@@ -136,4 +136,87 @@ docker run -it \
     --name pg-admin \
     --network=pg-network \
     dpage/pgadmin4
+```
+
+----
+## Class DE 1.2.4
+
+Now, let's "dockerize" our data ingestion script. \
+In the past script, the program is depending on us to convert the parquet files
+and to execute the script. Here we are, first, changing the way to execute and
+to making it more "customizible". We add the possibility to pass parameters to
+the script via bash using the native lib [`argparse`](https://docs.python.org/3/library/argparse.html), receiving the parameters,
+passing to a function _main()_ to finally execute it:
+> [ingestion-data.py](ingestion-data.py)
+```python
+import argparse
+# (...)
+
+def main(params):
+    user=params.user
+    password=params.password
+    host=params.host
+    port=params.port
+    db=params.db
+    table_name=params.table_name
+    url_file=params.url_file
+
+    # (...)
+
+parser = argparse.ArgumentParser(
+    description='Ingest CSV or Parquet file data to a Postgres table',
+)
+
+if __name__ == '__main__':
+    parser.add_argument('--user', help='user name for postgres', default='root')
+    parser.add_argument('--password', help='password for postgres', default='root')
+    parser.add_argument('--host', help='host for postgres', default='localhost')
+    parser.add_argument('--port', help='port for postgres', default='5432')
+    parser.add_argument('--table_name', help='name of the table to write data to', required=True)
+    parser.add_argument('--db', help='database name for postgres', required=True)
+    parser.add_argument('--url_file', help='url to the csv or parquet file', required=True)
+
+    args = parser.parse_args()
+    main(args)
+
+```
+
+Let's try to make the things a little bit clear to our user and for future debugging
+making logs! For this, we will use the simple native lib [`logging`](https://docs.python.org/3/library/logging.html):
+
+> [ingestion-data.py](ingestion-data.py)
+```python
+import logging
+# (...)
+
+logging.basicConfig(level=logging.INFO)
+# (...)
+    def main(args)
+    # (...)
+    logger = logging.getLogger()
+    logger.info("Ingestion-Data script started")
+    # (...)
+```
+
+Now, let's build our Docker image:
+> [snippets/docker-build.md](snippets/docker-build.md)
+```shell
+docker build -t taxi_ingest:v0.0.1 .
+```
+
+And finally test and execute it:
+
+> [snippets/docker-data-ingestion.md](snippets/docker-data-ingestion.md)
+```shell
+docker run -it \
+    --network=pg-network \
+    --name taxi_ingest_container \
+    taxi_ingest:v0.0.1 \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_data \
+    --url_file=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet
 ```
