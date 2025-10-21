@@ -219,7 +219,7 @@ ENTRYPOINT [ "python", "ingestion-data.py" ]
 Now, let's build our Docker image:
 > [snippets/docker-build.md](snippets/docker-build.md)
 ```shell
-docker build -t taxi_ingest:v0.0.1 .
+docker build -t url2pg:v0.0.2 .
 ```
 
 And finally test and execute it:
@@ -229,7 +229,7 @@ And finally test and execute it:
 docker run -it \
     --network=pg-network \
     --name taxi_ingest_container \
-    taxi_ingest:v0.0.1 \
+    url2pg:v0.0.2 \
     --user=root \
     --password=root \
     --host=pg-database \
