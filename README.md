@@ -7,9 +7,7 @@ Course: https://github.com/DataTalksClub/data-engineering-zoomcamp
 #### Many thanks to @cassiobolba who is helping me in this journey.
 
 ----
-## Class DE 1.2.1
-
-Video: [DE Zoomcamp 1.2.1 - Introduction to Docker](https://www.youtube.com/watch?v=EYNwNlOrpr0)
+## First Approach to Docker
 
 First, let's have a quick check in a Dockerfile and a simple usage.
 > [Dockerfile](Dockerfile)
@@ -25,9 +23,7 @@ RUN pip install pandas
 ENTRYPOINT [ "bash" ]
 ```
 
-## Class DE 1.2.2
-
-Video: [DE Zoomcamp 1.2.2 - Ingesting NY Taxi Data to Postgres](https://www.youtube.com/watch?v=2JM-ziJt0WI&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=4)
+## Creating a Postgres Instance and Ingesting Data
 
 ### Creating Postgres Instance with Docker
 
@@ -114,7 +110,7 @@ for i in range(math.ceil(n_lines / chunksize)):
 print('insertion finished')
 
 ```
-## Class DE 1.2.3
+## Managing Postgres with PGADMIN
 
 Now it's time to add a pg-admin, a web-based tool to manage postgres databases. \
 Since we are using Docker and pg-admin it's a different container, we need to
@@ -139,7 +135,7 @@ docker run -it \
 ```
 
 ----
-## Class DE 1.2.4
+## Dockerizing Our Script
 
 Now, let's "dockerize" our data ingestion script. \
 In the past script, the program is depending on us to convert the parquet files
@@ -240,7 +236,7 @@ docker run -it \
 ```
 
 ----
-## Class DE 1.2.5
+## Using Docker Compose
 
 Let's make our first `docker-compose` file to start our database and pg-admin:
 
@@ -284,7 +280,7 @@ docker compose up --force-recreate
 ```
 
 ----
-## Extra
+## Pushing to Docker Hub
 
 I decided to add this docker image in my docker hub profile.
 So, I created the repository at hub, and pushed my image:
