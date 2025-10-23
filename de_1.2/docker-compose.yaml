@@ -1,0 +1,39 @@
+services:
+  pg-database:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ny_taxi
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+    networks:
+      - pg-network
+  pg-admin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "8080:80"
+    networks:
+      - pg-network
+  ingestion-ny-taxi-zones:
+    image: cesarbouli/url2pg
+    command: --db=ny_taxi --host pg-database --table_name=zones --url_file=https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
+    networks:
+      - pg-network
+    depends_on:
+      - pg-database
+  ingestion-ny-taxi-yellow-data:
+    image: cesarbouli/url2pg
+    command: --db=ny_taxi --host pg-database --table_name=yellow_taxi_data --url_file=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet
+    networks:
+      - pg-network
+    depends_on:
+      - pg-database
+networks:
+  pg-network:
+    driver: bridge
