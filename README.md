@@ -11,49 +11,8 @@ Course: https://github.com/DataTalksClub/data-engineering-zoomcamp
 
 __
 
-# WIP: Class 1.3 - Terraform!
+# WIP: Class 1.4 - Infrastructure with GCP and Github COdespaces!
 
-## First approach with Terraform
+## Infrastructure with GCP and Github COdespaces
 
-After creating the GCP credential and set the
-Here we are just saying we will you the GCP provider:
-
-> [main.tf](main.tf)
-```terraform
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "7.8.0"
-    }
-  }
-}
-
-provider "google" {
-  project = "whalechant-460621"
-  region  = "europe-west3"
-  zone    = "europe-west3-a"
-}
-```
-
-And now we add a simple bucket:
-> [main.tf](main.tf)
-```terraform
-# (...)
-
-resource "google_storage_bucket" "demo-bucket" {
-  name          = "whalechant-460621-terraform-bucket"
-  location      = "EU"
-  force_destroy = true
-
-  lifecycle_rule {
-    condition {
-      age = 1
-    }
-    action {
-      type = "AbortIncompleteMultipartUpload"
-    }
-  }
-}
-
-```
+(...)
